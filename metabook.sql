@@ -16,11 +16,11 @@ DROP SEQUENCE cate_seq;
 DROP SEQUENCE stock_seq;
 
 --- <2-1> 객체 테이블 생성(PK -> FK 순)
------- [2-1] user 회원 테이블 만들기
+------ [2-1] member 회원 테이블 만들기
 CREATE TABLE member (
 	m_no  NUMBER        CONSTRAINT member_no_pk PRIMARY KEY, -- 회원번호
+    id       VARCHAR2(30)  CONSTRAINT member_id_uq_nn UNIQUE NOT NULL,     -- 아이디
 	password VARCHAR2(40) CONSTRAINT member_pw_nn NOT NULL, -- 비밀번호
-	id       VARCHAR2(30)  CONSTRAINT member_id_nn NOT NULL,     -- 아이디
 	name     VARCHAR2(20) CONSTRAINT member_name_nn NOT NULL, -- 이름
 	address  VARCHAR2(300) CONSTRAINT member_address_nn NOT NULL, -- 주소
 	phone    VARCHAR2(13) CONSTRAINT member_phone_nn NOT NULL, -- 전화번호
@@ -28,6 +28,7 @@ CREATE TABLE member (
 	status   VARCHAR2(6)  DEFAULT 'USER', -- 상태
 	regDate  DATE  DEFAULT sysdate -- 가입일
 );
+
 
 ------ [2-2] category 카테고리 테이블 만들기
 CREATE TABLE category (
@@ -101,4 +102,8 @@ CREATE SEQUENCE cart_seq;
 CREATE SEQUENCE stock_seq;
 
 --- <3> 샘플데이터 넣기(PK -> FK 순 : 있는 데이터만 입력가능한다.)
-commit;
+-- 관리자 넣기 테스트
+INSERT INTO member(m_no,id,password, name, address, phone, email,status)
+VALUES(member_seq.nextval,'admin','1234','관리자','서울','010-1234-5678','admin@test.com','ADMIN');
+
+COMMIT;
