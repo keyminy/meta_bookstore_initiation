@@ -25,7 +25,8 @@ CREATE TABLE member (
 	address  VARCHAR2(300) CONSTRAINT member_address_nn NOT NULL, -- 주소
 	phone    VARCHAR2(13) CONSTRAINT member_phone_nn NOT NULL, -- 전화번호
 	email    VARCHAR2(50) CONSTRAINT member_email_nn NOT NULL, -- 이메일
-	status   VARCHAR2(6)  DEFAULT 'USER', -- 상태
+	grade   VARCHAR2(10)  DEFAULT 'USER'
+    CONSTRAINT member_grade_ck CHECK(grade in('ADMIN','USER')), -- 상태
 	regDate  DATE  DEFAULT sysdate -- 가입일
 );
 
@@ -103,7 +104,9 @@ CREATE SEQUENCE stock_seq;
 
 --- <3> 샘플데이터 넣기(PK -> FK 순 : 있는 데이터만 입력가능한다.)
 -- 관리자 넣기 테스트
-INSERT INTO member(m_no,id,password, name, address, phone, email,status)
+INSERT INTO member(m_no,id,password, name, address, phone, email,grade)
 VALUES(member_seq.nextval,'admin','1234','관리자','서울','010-1234-5678','admin@test.com','ADMIN');
-
+INSERT INTO member(m_no,id,password, name, address, phone, email)
+VALUES(member_seq.nextval,'user','1234','김유저','서울','010-1111-1111','user@test.com');
 COMMIT;
+select * from member;
