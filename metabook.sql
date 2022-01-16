@@ -1,7 +1,7 @@
 --- <1> 객체 제거
 ------ [1-1] 테이블 제거(FK -> PK 순)
 DROP TABLE cart CASCADE CONSTRAINTS;
-DROP TABLE meta_order CASCADE CONSTRAINTS;
+DROP TABLE orders CASCADE CONSTRAINTS;
 DROP TABLE stock CASCADE CONSTRAINTS;
 DROP TABLE book CASCADE CONSTRAINTS;
 DROP TABLE category CASCADE CONSTRAINTS;
@@ -10,7 +10,7 @@ DROP TABLE member CASCADE CONSTRAINTS;
 ------ [1-2] 시퀀스 제거(순서와 상관없음)
 DROP SEQUENCE member_seq;
 DROP SEQUENCE book_seq;
-DROP SEQUENCE meta_order_seq;
+DROP SEQUENCE orders_seq;
 DROP SEQUENCE cart_seq;
 DROP SEQUENCE cate_seq;
 DROP SEQUENCE stock_seq;
@@ -19,7 +19,7 @@ DROP SEQUENCE stock_seq;
 ------ [2-1] member 회원 테이블 만들기
 CREATE TABLE member (
 	m_no  NUMBER        CONSTRAINT member_no_pk PRIMARY KEY, -- 회원번호
-    id       VARCHAR2(30)  CONSTRAINT member_id_uq_nn UNIQUE NOT NULL,     -- 아이디
+     id       VARCHAR2(30)  CONSTRAINT member_id_uq_nn UNIQUE NOT NULL,  -- 아이디
 	password VARCHAR2(40) CONSTRAINT member_pw_nn NOT NULL, -- 비밀번호
 	name     VARCHAR2(20) CONSTRAINT member_name_nn NOT NULL, -- 이름
 	address  VARCHAR2(300) CONSTRAINT member_address_nn NOT NULL, -- 주소
@@ -60,9 +60,8 @@ CREATE TABLE stock (
     ON DELETE CASCADE,     -- 책번호
 	sold_cnt NUMBER DEFAULT 0      -- 판매수량
 );
-
 ------ [2-5] order 주문 테이블 만들기
-CREATE TABLE meta_order (
+CREATE TABLE orders (
 	order_no       NUMBER  CONSTRAINT order_no_pk PRIMARY KEY, -- 주문상품일련번호
 	order_id       NUMBER  CONSTRAINT order_id_nn NOT NULL,     -- 주문번호
 	m_no        NUMBER  NOT NULL 
@@ -98,7 +97,7 @@ CREATE TABLE cart (
 CREATE SEQUENCE member_seq;
 CREATE SEQUENCE cate_seq;
 CREATE SEQUENCE book_seq;
-CREATE SEQUENCE meta_order_seq;
+CREATE SEQUENCE orders_seq;
 CREATE SEQUENCE cart_seq;
 CREATE SEQUENCE stock_seq;
 
