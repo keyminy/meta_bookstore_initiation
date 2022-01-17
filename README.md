@@ -2,4 +2,4 @@
 시작 셋팅
 
 
-![erd사진](./images/erd.JPG)
+![erd사진](./images/erd변경.JPG)
