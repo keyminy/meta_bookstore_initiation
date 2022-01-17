@@ -72,6 +72,7 @@ CREATE TABLE orders (
     ON DELETE CASCADE,     -- 책번호
 	order_qt       NUMBER  CONSTRAINT order_qt_nn NOT NULL,     -- 주문수량
 	total_price    NUMBER  CONSTRAINT order_total_price_nn NOT NULL,     -- 총가격
+    msg VARCHAR2(1000), -- 배송메시지(추가된것)
 	receiver_addr  VARCHAR2(3000) CONSTRAINT order_receiver_addr_nn NOT NULL,     -- 수령자주소
 	receiver_phone VARCHAR2(13)   CONSTRAINT order_receiver_phone_nn NOT NULL,     -- 수령자전화번호
 	receiver_name  VARCHAR2(30)   CONSTRAINT order_receiver_name_nn NOT NULL,     -- 수령자이름
@@ -109,3 +110,15 @@ INSERT INTO member(m_no,id,password, name, address, phone, email)
 VALUES(member_seq.nextval,'user','1234','김유저','서울','010-1111-1111','user@test.com');
 COMMIT;
 select * from member;
+
+-- 카테고리 데이터 넣기
+INSERT INTO category(cate_no,cate_name)
+VALUES(cate_seq.nextval,'문학');
+
+-- book 데이터 넣기
+INSERT INTO book(book_no,title,author, pub, description, price,cate_no)
+VALUES(book_seq.nextval,'별헤는밤','윤동주','영진출판사','윤동주의 시',20000,1);
+
+commit;
+
+select * from book;
