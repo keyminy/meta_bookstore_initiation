@@ -1,20 +1,36 @@
 package com.meta.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity //해당 파일로 Security 활성화
+@EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true,jsr250Enabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
+	@Autowired
+	UserDetailsService userDetailsService;
+	
 	@Bean
 	public BCryptPasswordEncoder encode() {
 		return new BCryptPasswordEncoder();
+	}
+	
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		//로그인한 사용자 정보를 조회할때 userDetailsService객체를 사용하라.
+		//passwordEncoder()메소드가 리턴하는 객체를 사용하여, 비밀번호를 암호화 하라.
+		auth.userDetailsService(userDetailsService)
+			.passwordEncoder(encode());
 	}
 	
 	@Override
