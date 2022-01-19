@@ -108,7 +108,7 @@ INSERT INTO member(m_no,id,password, name, address, phone, email,grade)
 VALUES(member_seq.nextval,'admin','1234','관리자','서울','010-1234-5678','admin@test.com','ADMIN');
 INSERT INTO member(m_no,id,password, name, address, phone, email)
 VALUES(member_seq.nextval,'user','1234','김유저','서울','010-1111-1111','user@test.com');
-COMMIT;
+COMMIT; 
 select * from member;
 
 -- 카테고리 데이터 넣기
