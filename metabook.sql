@@ -20,7 +20,7 @@ DROP SEQUENCE stock_seq;
 CREATE TABLE member (
 	m_no  NUMBER        CONSTRAINT member_no_pk PRIMARY KEY, -- 회원번호
      id       VARCHAR2(30)  CONSTRAINT member_id_uq_nn UNIQUE NOT NULL,  -- 아이디
-	password VARCHAR2(40) CONSTRAINT member_pw_nn NOT NULL, -- 비밀번호
+	password VARCHAR2(100) CONSTRAINT member_pw_nn NOT NULL, -- 비밀번호
 	name     VARCHAR2(20) CONSTRAINT member_name_nn NOT NULL, -- 이름
 	address  VARCHAR2(300) CONSTRAINT member_address_nn NOT NULL, -- 주소
 	phone    VARCHAR2(13) CONSTRAINT member_phone_nn NOT NULL, -- 전화번호
@@ -104,10 +104,11 @@ CREATE SEQUENCE stock_seq;
 
 --- <3> 샘플데이터 넣기(PK -> FK 순 : 있는 데이터만 입력가능한다.)
 -- 관리자 넣기 테스트
+-- 비밀번호는(1234입니다)
 INSERT INTO member(m_no,id,password, name, address, phone, email,grade)
-VALUES(member_seq.nextval,'admin','1234','관리자','서울','010-1234-5678','admin@test.com','ADMIN');
+VALUES(member_seq.nextval,'admin','$2a$10$71lWCuadIjhn/buyeWZlvukYwBDltBCVIT4d1vE9hVA/o8oCyHrs6','관리자','서울','010-1234-5678','admin@test.com','ADMIN');
 INSERT INTO member(m_no,id,password, name, address, phone, email)
-VALUES(member_seq.nextval,'user','1234','김유저','서울','010-1111-1111','user@test.com');
+VALUES(member_seq.nextval,'user','$2a$10$71lWCuadIjhn/buyeWZlvukYwBDltBCVIT4d1vE9hVA/o8oCyHrs6','김유저','서울','010-1111-1111','user@test.com');
 COMMIT; 
 select * from member;
 
